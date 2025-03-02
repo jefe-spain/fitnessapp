@@ -1,7 +1,16 @@
+import { useAuthStore } from '@store/auth';
 import { Redirect } from 'expo-router';
 
 // This file serves as a fallback for non-web platforms
-// It simply redirects to the tabs navigation
+// It redirects based on authentication status
 export default function Index() {
-  return <Redirect href="/(tabs)" />;
+  const { isAuthenticated, isLoading } = useAuthStore();
+
+  // If still loading auth state, don't redirect yet
+  if (isLoading) {
+    return null;
+  }
+
+  // Redirect based on authentication status
+  return isAuthenticated ? <Redirect href="/(tabs)" /> : <Redirect href="/auth" />;
 }

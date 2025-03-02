@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "my-expo-app",
-    "slug": "my-expo-app",
+    "name": "fitness-app",
+    "slug": "fitness-app",
     "version": "1.0.0",
 
-    "scheme": "my-expo-app",
+    "scheme": "fitness-app",
     "web": {
       "bundler": "metro",
       "output": "static",
@@ -36,6 +36,15 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      }
+    },
+    "developmentClient": {
+      "silentLaunch": {
+        "ios": {
+          "simulator": {
+            "deviceType": "iPhone 15 Pro"
+          }
+        }
       }
     }
   }
