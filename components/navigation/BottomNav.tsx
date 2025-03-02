@@ -1,10 +1,9 @@
 import { Feather } from '@expo/vector-icons';
+import { useTranslation } from '@i18n/core';
 import { useRouter, usePathname } from 'expo-router';
 import { useCallback, useMemo } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-import { useTranslation } from '../../i18n';
 
 // Types
 interface NavItem {
@@ -27,26 +26,26 @@ export function BottomNav() {
         id: 'workout',
         icon: 'activity',
         labelKey: 'navigation.tabs.workout',
-        href: '/(tabs)/workout',
+        href: '/(tabs)/workout'
       },
       {
         id: 'nutrition',
         icon: 'book-open',
         labelKey: 'navigation.tabs.nutrition',
-        href: '/(tabs)/nutrition',
+        href: '/(tabs)/nutrition'
       },
       {
         id: 'stats',
         icon: 'bar-chart-2',
         labelKey: 'navigation.tabs.stats',
-        href: '/(tabs)/stats',
+        href: '/(tabs)/stats'
       },
       {
         id: 'chat',
         icon: 'message-square',
         labelKey: 'navigation.tabs.chat',
-        href: '/(tabs)/chat',
-      },
+        href: '/(tabs)/chat'
+      }
     ],
     []
   );

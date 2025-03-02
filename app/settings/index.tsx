@@ -1,17 +1,26 @@
 import { Feather } from '@expo/vector-icons';
+import { useTranslation, LANGUAGE_OPTIONS } from '@i18n/core';
+import { useAuthStore } from '@store/auth';
+import { useLanguageStore } from '@store/language';
+import { LanguageOption } from '@store/language/types';
 import { useRouter } from 'expo-router';
 import { useCallback, useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, Modal, FlatList } from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Modal,
+  FlatList,
+  Alert,
+  ActivityIndicator
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-import { useTranslation, LANGUAGE_OPTIONS } from '../../i18n';
-import { useLanguageStore } from '../../store/language';
-import { LanguageOption } from '../../store/language/types';
 
 export default function SettingsScreen() {
   const router = useRouter();
   const { t } = useTranslation();
   const { language, setLanguage, initializeLanguage } = useLanguageStore();
+  const { logout, isLoading } = useAuthStore();
   const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false);
 
   // Initialize language on component mount
@@ -39,6 +48,24 @@ export default function SettingsScreen() {
     [setLanguage, closeLanguageModal]
   );
 
+  // Handle logout
+  const handleLogout = useCallback(() => {
+    Alert.alert(t('settings.logout.confirmTitle'), t('settings.logout.confirmMessage'), [
+      {
+        text: t('common.actions.cancel'),
+        style: 'cancel'
+      },
+      {
+        text: t('settings.logout.confirmButton'),
+        style: 'destructive',
+        onPress: async () => {
+          await logout();
+          router.replace('/auth');
+        }
+      }
+    ]);
+  }, [logout, router, t]);
+
   // Find the current language option
   const currentLanguage = LANGUAGE_OPTIONS.find((option) => option.code === language);
 
@@ -59,6 +86,7 @@ export default function SettingsScreen() {
 
       {/* Content */}
       <View className="flex-1 p-4">
+        {/* Language Settings */}
         <View className="mt-6 rounded-xl bg-white p-4 shadow-sm">
           <Text className="mb-4 text-base font-semibold text-gray-800">
             {t('settings.language.title')}
@@ -75,6 +103,27 @@ export default function SettingsScreen() {
             <Text className="mr-2 text-base text-gray-600">
               {currentLanguage?.flag} {currentLanguage?.name}
             </Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Account Settings */}
+        <View className="mt-6 rounded-xl bg-white p-4 shadow-sm">
+          <Text className="mb-4 text-base font-semibold text-gray-800">
+            {t('settings.account.title')}
+          </Text>
+
+          {/* Logout Button */}
+          <TouchableOpacity
+            className="flex-row items-center py-3"
+            onPress={handleLogout}
+            disabled={isLoading}
+            accessibilityRole="button"
+            accessibilityLabel={t('settings.logout.title')}>
+            <View className="mr-3 h-8 w-8 items-center justify-center rounded-lg bg-red-100">
+              <Feather name="log-out" size={18} color="#E53E3E" />
+            </View>
+            <Text className="flex-1 text-base text-red-600">{t('settings.logout.title')}</Text>
+            {isLoading && <ActivityIndicator size="small" color="#3B82F6" />}
           </TouchableOpacity>
         </View>
       </View>

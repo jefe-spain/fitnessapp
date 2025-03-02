@@ -3,8 +3,7 @@ module.exports = {
   tabWidth: 2,
   singleQuote: true,
   bracketSameLine: true,
-  trailingComma: 'es5',
-
+  trailingComma: 'none',
   plugins: [require.resolve('prettier-plugin-tailwindcss')],
-  tailwindAttributes: ['className'],
+  tailwindAttributes: ['className']
 };

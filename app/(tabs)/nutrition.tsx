@@ -1,6 +1,5 @@
+import { useTranslation } from '@i18n/core';
 import { StyleSheet, View, Text } from 'react-native';
-
-import { useTranslation } from '../../i18n';
 
 export default function NutritionScreen() {
   const { t } = useTranslation();
@@ -18,16 +17,16 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 24,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 8
   },
   subtitle: {
     fontSize: 16,
     color: '#666',
-    textAlign: 'center',
-  },
+    textAlign: 'center'
+  }
 });

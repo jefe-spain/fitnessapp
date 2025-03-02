@@ -38,3 +38,6 @@ npm-shrinkwrap.json
 
 # .vscode
 .vscode/
+
+# Supabase
+supabase/

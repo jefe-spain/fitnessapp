@@ -1,10 +1,9 @@
 import { Feather } from '@expo/vector-icons';
+import { useTranslation } from '@i18n/core';
 import { Tabs, useRouter } from 'expo-router';
 import { useCallback } from 'react';
 import { View, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-import { useTranslation } from '../../i18n';
 
 import { BottomNav } from '~/components/navigation/BottomNav';
 
@@ -41,7 +40,7 @@ export default function TabLayout() {
         <Tabs
           screenOptions={{
             headerShown: false,
-            tabBarStyle: { display: 'none' }, // Hide the default tab bar
+            tabBarStyle: { display: 'none' } // Hide the default tab bar
           }}>
           <Tabs.Screen name="index" options={{ title: t('navigation.tabs.home') }} />
           <Tabs.Screen name="workout" options={{ title: t('navigation.tabs.workout') }} />

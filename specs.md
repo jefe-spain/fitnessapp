@@ -16,6 +16,11 @@ fitnessapp/
 │   │   ├── nutrition.tsx     # Nutrition screen
 │   │   ├── stats.tsx         # Statistics screen
 │   │   └── chat.tsx          # Chat screen
+│   ├── auth/                 # Authentication screens
+│   │   ├── _layout.tsx       # Auth layout configuration
+│   │   ├── index.tsx         # Main login screen with social options
+│   │   ├── email.tsx         # Email login screen
+│   │   └── signup.tsx        # Sign up screen
 │   ├── settings/             # Settings screens
 │   │   ├── _layout.tsx       # Settings layout configuration
 │   │   └── index.tsx         # Settings main screen
@@ -133,4 +138,32 @@ fitnessapp/
 ## Upcoming Enhancements
 
 - Supabase integration
-- User authentication
+- User authentication (Implemented)
+
+## Authentication System
+
+The application now includes a robust authentication system with the following features:
+
+### Authentication State Management
+
+- **Zustand Store**: Centralized authentication state management using Zustand
+- **Secure Storage**: Secure token storage using `expo-secure-store` for native platforms and encrypted localStorage for web
+- **Mock Authentication**: Currently using mock authentication functions (to be replaced with actual backend integration)
+
+### Authentication Flow
+
+- **Conditional Navigation**: Redirects users based on authentication status
+- **Protected Routes**: Prevents access to protected routes for unauthenticated users
+- **Token Management**: Handles access and refresh tokens securely
+
+### Authentication Screens
+
+- **Login Screen**: Email/password login with social login placeholders
+- **Signup Screen**: User registration with email/password
+- **Web Landing Page**: Special authentication handling for web platform
+
+### Security Features
+
+- **Secure Token Storage**: Tokens stored securely using platform-specific methods
+- **Cross-Platform Support**: Works on both native and web platforms
+- **Token Refresh**: Automatic token refresh mechanism
