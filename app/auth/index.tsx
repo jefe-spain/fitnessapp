@@ -3,6 +3,7 @@ import { useTranslation } from '@i18n/core';
 import { useAuthStore } from '@store/auth';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
+import * as WebBrowser from 'expo-web-browser';
 import React, { useEffect } from 'react';
 import {
   View,
@@ -15,6 +16,11 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { supabase } from '../../utilities/supabase';
+
+// Required for OAuth in Expo
+WebBrowser.maybeCompleteAuthSession();
+
 export default function LoginScreen() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
@@ -22,7 +28,7 @@ export default function LoginScreen() {
   const isTablet = width > 768;
 
   // Get auth state from store
-  const { isAuthenticated, isLoading } = useAuthStore();
+  const { isAuthenticated, isLoading, setError } = useAuthStore();
 
   // Redirect to tabs if already authenticated
   useEffect(() => {
@@ -41,24 +47,34 @@ export default function LoginScreen() {
   }
 
   const handleAppleSignIn = async () => {
-    // Implement Apple Sign In with Supabase
     try {
-      // For now, this is a placeholder
-      // Will be implemented in the future
-      console.log('Apple Sign In pressed');
-    } catch (error) {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'apple',
+        options: {
+          redirectTo: 'fitnessapp://auth/callback'
+        }
+      });
+
+      if (error) throw error;
+    } catch (error: any) {
       console.error('Error signing in with Apple:', error);
+      setError(error.message || 'Failed to sign in with Apple');
     }
   };
 
   const handleGoogleSignIn = async () => {
-    // Implement Google Sign In with Supabase
     try {
-      // For now, this is a placeholder
-      // Will be implemented in the future
-      console.log('Google Sign In pressed');
-    } catch (error) {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: 'fitnessapp://auth/callback'
+        }
+      });
+
+      if (error) throw error;
+    } catch (error: any) {
       console.error('Error signing in with Google:', error);
+      setError(error.message || 'Failed to sign in with Google');
     }
   };
 

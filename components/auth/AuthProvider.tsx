@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
 
 import { useAuthStore } from '../../store/auth';
+import { supabase } from '../../utilities/supabase';
+import { extractUserData } from '../../utilities/supabase/session';
 
 // Protected routes require authentication
 const PROTECTED_SEGMENTS = ['(tabs)', 'settings'];
@@ -13,7 +15,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isInitialized, setIsInitialized] = useState(false);
 
   // Get auth state from store
-  const { isAuthenticated, isLoading, initialize } = useAuthStore();
+  const { isAuthenticated, isLoading, initialize, setUser, setTokens, logout } = useAuthStore();
 
   // Initialize auth state on mount
   useEffect(() => {
@@ -24,6 +26,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     initAuth();
   }, [initialize]);
+
+  // Set up Supabase auth state change listener
+  useEffect(() => {
+    const {
+      data: { subscription }
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        // Handle sign in
+        const { user } = session;
+
+        if (user) {
+          setUser(extractUserData(user));
+          await setTokens(session.access_token, session.refresh_token);
+        }
+      } else if (event === 'SIGNED_OUT') {
+        // Handle sign out - this will be handled by the logout function
+      } else if (event === 'TOKEN_REFRESHED' && session) {
+        // Handle token refresh
+        await setTokens(session.access_token, session.refresh_token);
+      }
+    });
+
+    // Clean up subscription
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [setUser, setTokens, logout]);
 
   // Handle navigation based on auth state
   useEffect(() => {

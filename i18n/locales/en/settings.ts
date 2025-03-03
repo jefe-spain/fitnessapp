@@ -4,25 +4,25 @@ export default {
     title: 'Language',
     english: 'English',
     spanish: 'Spanish',
-    selectLanguage: 'Select language',
+    selectLanguage: 'Select language'
   },
   appearance: {
     title: 'Appearance',
     darkMode: 'Dark Mode',
     lightMode: 'Light Mode',
-    systemDefault: 'System Default',
+    systemDefault: 'System Default'
   },
   account: {
     title: 'Account',
     profile: 'Profile',
     security: 'Security',
-    notifications: 'Notifications',
+    notifications: 'Notifications'
   },
   about: {
     title: 'About',
     version: 'Version',
     termsOfService: 'Terms of Service',
-    privacyPolicy: 'Privacy Policy',
+    privacyPolicy: 'Privacy Policy'
   },
-  logout: 'Logout',
+  logout: 'Logout'
 };
