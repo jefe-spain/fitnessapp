@@ -15,5 +15,5 @@ export interface LanguageOption {
 
 export const LANGUAGE_OPTIONS: LanguageOption[] = [
   { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'es', name: 'Español', flag: '🇪🇸' },
+  { code: 'es', name: 'Español', flag: '🇪🇸' }
 ];

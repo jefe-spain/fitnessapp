@@ -4,7 +4,7 @@ export default {
     workout: 'Workout',
     nutrition: 'Nutrition',
     stats: 'Stats',
-    chat: 'Chat',
+    chat: 'Chat'
   },
-  settings: 'Settings',
+  settings: 'Settings'
 };

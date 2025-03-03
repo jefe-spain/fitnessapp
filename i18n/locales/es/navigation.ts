@@ -4,7 +4,7 @@ export default {
     workout: 'Entrenamiento',
     nutrition: 'Nutrición',
     stats: 'Estadísticas',
-    chat: 'Chat',
+    chat: 'Chat'
   },
-  settings: 'Configuración',
+  settings: 'Configuración'
 };

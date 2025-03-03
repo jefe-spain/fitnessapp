@@ -45,5 +45,5 @@ export const useLanguageStore = create<LanguageState>((set, get) => ({
       i18next.changeLanguage('en');
       set({ language: 'en', isInitialized: true });
     }
-  },
+  }
 }));

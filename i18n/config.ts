@@ -10,17 +10,17 @@ i18next.use(initReactI18next).init({
   compatibilityJSON: 'v4',
   resources: {
     en: {
-      translation: en,
+      translation: en
     },
     es: {
-      translation: es,
-    },
+      translation: es
+    }
   },
   lng: 'en', // Default language
   fallbackLng: 'en',
   interpolation: {
-    escapeValue: false, // React already escapes values
-  },
+    escapeValue: false // React already escapes values
+  }
 });
 
 export default i18next;

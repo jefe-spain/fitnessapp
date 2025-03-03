@@ -5,5 +5,5 @@ import settings from './settings';
 export default {
   common,
   navigation,
-  settings,
+  settings
 };

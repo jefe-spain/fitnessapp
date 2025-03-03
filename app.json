@@ -4,7 +4,7 @@
     "slug": "fitness-app",
     "version": "1.0.0",
 
-    "scheme": "fitness-app",
+    "scheme": "fitnessapp",
     "web": {
       "bundler": "metro",
       "output": "static",
@@ -30,13 +30,15 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.fitnessapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.fitnessapp"
     },
     "developmentClient": {
       "silentLaunch": {
