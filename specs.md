@@ -43,6 +43,11 @@ fitnessapp/
 │   │   ├── index.ts          # Language store implementation
 │   │   └── types.ts          # Language types
 │   └── store.ts              # Store configuration
+├── prisma/                   # Database schema and migrations
+│   ├── schema.prisma         # Prisma schema definition
+│   └── migrations/           # Database migrations
+├── supabase/                 # Supabase configuration and migrations
+│   └── config.toml           # Supabase local configuration
 └── utils/                    # Utility functions
 ```
 
@@ -75,6 +80,12 @@ fitnessapp/
 - **i18next**: Internationalization framework
 - **react-i18next**: React bindings for i18next
 - **Expo Localization**: Device locale detection
+
+### Database & Backend
+
+- **Supabase**: Backend-as-a-Service for authentication, database, and storage
+- **Prisma**: Database schema management and migrations
+- **PostgreSQL**: Relational database for data storage
 
 ## Features
 
@@ -135,10 +146,29 @@ fitnessapp/
 - Dynamic language switching
 - Fallback language support
 
+### Database Schema
+
+The application uses Prisma to manage the database schema and Supabase as the backend service. The current schema includes:
+
+#### User Model
+
+- **id**: Unique identifier (UUID)
+- **email**: User's email address (unique)
+- **name**: User's full name (optional)
+- **avatar_url**: URL to user's profile picture (optional)
+- **height_cm**: User's height in centimeters (optional)
+- **weight_kg**: User's weight in kilograms (optional)
+- **date_of_birth**: User's date of birth (optional)
+- **gender**: User's gender (optional)
+- **created_at**: Timestamp when the user was created
+- **updated_at**: Timestamp when the user was last updated
+
 ## Upcoming Enhancements
 
-- Supabase integration
+- Additional data models for workouts, nutrition tracking, and fitness goals
 - User authentication (Implemented)
+- Social features and sharing capabilities
+- Advanced analytics and progress tracking
 
 ## Authentication System
 
