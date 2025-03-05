@@ -42,7 +42,7 @@ export default function TabLayout() {
             headerShown: false,
             tabBarStyle: { display: 'none' } // Hide the default tab bar
           }}>
-          <Tabs.Screen name="index" options={{ title: t('navigation.tabs.home') }} />
+          <Tabs.Screen name="home" options={{ title: t('navigation.tabs.home') }} />
           <Tabs.Screen name="workout" options={{ title: t('navigation.tabs.workout') }} />
           <Tabs.Screen name="nutrition" options={{ title: t('navigation.tabs.nutrition') }} />
           <Tabs.Screen name="stats" options={{ title: t('navigation.tabs.stats') }} />

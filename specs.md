@@ -13,7 +13,14 @@ fitnessapp/
 │   │   ├── _layout.tsx       # Tab layout configuration
 │   │   ├── index.tsx         # Home screen
 │   │   ├── workout.tsx       # Workout screen
-│   │   ├── nutrition.tsx     # Nutrition screen
+│   │   ├── nutrition.tsx     # Nutrition redirect
+│   │   ├── nutrition/        # Nutrition feature folder
+│   │   │   ├── _layout.tsx   # Nutrition stack layout
+│   │   │   ├── index.tsx     # Nutrition list screen
+│   │   │   ├── [id].tsx      # Meal detail screen
+│   │   │   ├── types.ts      # Nutrition type definitions
+│   │   │   └── components/   # Nutrition-specific components
+│   │   │       └── MealCard.tsx # Meal card component
 │   │   ├── stats.tsx         # Statistics screen
 │   │   └── chat.tsx          # Chat screen
 │   ├── auth/                 # Authentication screens
@@ -42,6 +49,10 @@ fitnessapp/
 │   ├── language/             # Language state management
 │   │   ├── index.ts          # Language store implementation
 │   │   └── types.ts          # Language types
+│   ├── auth/                 # Authentication state management
+│   │   └── index.ts          # Auth store implementation
+│   ├── nutrition/            # Nutrition state management
+│   │   └── index.ts          # Nutrition store with meal data
 │   └── store.ts              # Store configuration
 ├── prisma/                   # Database schema and migrations
 │   ├── schema.prisma         # Prisma schema definition
@@ -93,6 +104,7 @@ fitnessapp/
 
 - Custom bottom navigation bar with active state indicators
 - Tab-based navigation for main app sections
+- Stack navigation for detailed views (e.g., meal details)
 - Modal-based navigation for settings
 
 ### Internationalization
@@ -106,10 +118,43 @@ fitnessapp/
 
 1. **Home**: Main dashboard for the application
 2. **Workout**: Plan and track fitness activities
-3. **Nutrition**: Monitor dietary intake and nutrition plans
+3. **Nutrition**:
+   - Browse meal options with nutritional information
+   - View detailed meal information including ingredients, instructions, and macros
+   - Card-based UI for meal selection
 4. **Stats**: View fitness progress and statistics
 5. **Chat**: Communicate with fitness professionals
 6. **Settings**: Configure app preferences including language
+
+## Nutrition Feature
+
+The nutrition feature allows users to:
+
+- Browse a list of meals with preview information (calories, protein, prep time)
+- View detailed information about each meal including:
+  - Full nutritional breakdown (protein, carbs, fat)
+  - Ingredient list with quantities
+  - Step-by-step preparation instructions
+  - Cooking tips
+- Navigate between the meal list and individual meal details using stack navigation
+- Visual indicators for meal properties (prep time, serving size, calories)
+
+### Nutrition Data Model
+
+#### Meal
+
+- **id**: Unique identifier
+- **name**: Name of the meal
+- **imageUrl**: URL to the meal image
+- **prepTime**: Preparation time
+- **servingSize**: Serving size information
+- **calories**: Calorie count
+- **protein**: Protein content in grams
+- **carbs**: Carbohydrate content in grams
+- **fat**: Fat content in grams
+- **ingredients**: Array of ingredients with name, quantity, and optional notes
+- **instructions**: Array of step-by-step instructions
+- **tips**: Optional cooking or preparation tips
 
 ## UI/UX Design Principles
 
@@ -118,6 +163,7 @@ fitnessapp/
 - **Consistent Styling**: Unified design language across all screens
 - **Accessibility**: Support for screen readers and accessibility features
 - **Smooth Transitions**: Animated transitions between screens and states
+- **Card-Based UI**: Visual card components for browsing items like meals
 
 ## Development Guidelines
 
@@ -130,7 +176,7 @@ fitnessapp/
 
 ### Styling Approach
 
-- Tailwind CSS for consistent styling
+- NativeWind/Tailwind CSS for consistent styling
 - Responsive design with flexible layouts
 - Theme-based color system
 
@@ -139,6 +185,7 @@ fitnessapp/
 - Zustand for global state management
 - React hooks for local state
 - AsyncStorage for persistent data
+- Feature-specific stores (auth, nutrition, etc.)
 
 ### Internationalization
 
@@ -163,16 +210,9 @@ The application uses Prisma to manage the database schema and Supabase as the ba
 - **created_at**: Timestamp when the user was created
 - **updated_at**: Timestamp when the user was last updated
 
-## Upcoming Enhancements
-
-- Additional data models for workouts, nutrition tracking, and fitness goals
-- User authentication (Implemented)
-- Social features and sharing capabilities
-- Advanced analytics and progress tracking
-
 ## Authentication System
 
-The application now includes a robust authentication system with the following features:
+The application includes a robust authentication system with the following features:
 
 ### Authentication State Management
 
