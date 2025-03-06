@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from '@i18n/core';
-import { useLocalSearchParams, useRouter } from 'expo-router';
-import React, { useEffect } from 'react';
+import { useLocalSearchParams } from 'expo-router';
+import { useEffect } from 'react';
 import { View, Text, Image, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
