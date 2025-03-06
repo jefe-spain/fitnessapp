@@ -122,12 +122,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## 📞 Contact
 
-If you have any questions or feedback, please reach out to us at:
-
-- Email: contact@fitnessapp.com
-- Twitter: [@fitnessapp](https://twitter.com/fitnessapp)
-
----
+If you have any questions or feedback, please drop me a message!!
 
 <p align="center">
   Made with ❤️ by Jefe_Spain
