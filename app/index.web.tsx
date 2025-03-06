@@ -25,11 +25,6 @@ export default function WebLandingPage() {
     router.push('/auth/signup');
   };
 
-  // Handle logout
-  const handleLogout = async () => {
-    await logout();
-  };
-
   // If loading or authenticated, show minimal content
   if (isLoading || isAuthenticated) {
     return null;
