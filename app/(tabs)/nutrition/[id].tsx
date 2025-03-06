@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from '@i18n/core';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect } from 'react';
-import { View, Text, Image, ScrollView, Pressable } from 'react-native';
+import { View, Text, Image, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { useNutritionStore } from '../../../store/nutrition';
@@ -10,8 +10,7 @@ import { useNutritionStore } from '../../../store/nutrition';
 export default function MealDetailScreen() {
   const { t } = useTranslation();
   const { id } = useLocalSearchParams<{ id: string }>();
-  const router = useRouter();
-  const { meals, isLoading, error, fetchMeals, getMealById } = useNutritionStore();
+  const { meals, isLoading, fetchMeals, getMealById } = useNutritionStore();
 
   const meal = getMealById(id);
 
@@ -35,21 +34,13 @@ export default function MealDetailScreen() {
         <Text className="mb-4 text-center text-lg font-bold">
           {t('nutrition.mealNotFound', 'Meal not found')}
         </Text>
-        <Pressable className="flex-row items-center" onPress={() => router.back()}>
-          <Text className="text-base text-blue-500">{t('common.goBack', 'Go Back')}</Text>
-        </Pressable>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50" edges={['bottom']}>
+    <SafeAreaView className="flex-1 bg-gray-50">
       <ScrollView className="pb-6">
-        <Pressable className="flex-row items-center p-4" onPress={() => router.back()}>
-          <Ionicons name="chevron-back" size={24} color="#007AFF" />
-          <Text className="ml-1 text-base text-blue-500">{t('common.back', 'Back')}</Text>
-        </Pressable>
-
         {meal.imageUrl ? (
           <Image source={{ uri: meal.imageUrl }} className="h-64 w-full object-cover" />
         ) : (

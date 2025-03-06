@@ -52,7 +52,7 @@ export function BottomNav() {
 
   const isTabActive = useCallback(
     (href: string) => {
-      if (href === '/(tabs)' && (pathname === '/(tabs)' || pathname === '/(tabs)/index')) {
+      if (href === '/(tabs)' && (pathname === '/(tabs)' || pathname === '/(tabs)/home')) {
         return true;
       }
       return pathname === href;
