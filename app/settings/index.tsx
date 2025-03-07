@@ -1,3 +1,4 @@
+import { Header } from '@components/navigation/Header';
 import { Feather } from '@expo/vector-icons';
 import { useTranslation, LANGUAGE_OPTIONS } from '@i18n/core';
 import { useAuthStore } from '@store/auth';
@@ -12,7 +13,8 @@ import {
   Modal,
   FlatList,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
+  ScrollView
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -27,10 +29,6 @@ export default function SettingsScreen() {
   useEffect(() => {
     initializeLanguage();
   }, [initializeLanguage]);
-
-  const handleGoBack = useCallback(() => {
-    router.back();
-  }, [router]);
 
   const openLanguageModal = useCallback(() => {
     setIsLanguageModalVisible(true);
@@ -70,22 +68,9 @@ export default function SettingsScreen() {
   const currentLanguage = LANGUAGE_OPTIONS.find((option) => option.code === language);
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
-      {/* Header */}
-      <View className="flex-row items-center justify-between border-b border-gray-200 bg-white px-4 py-3">
-        <TouchableOpacity
-          onPress={handleGoBack}
-          className="h-10 w-10 items-center justify-center"
-          accessibilityLabel={t('common.actions.back')}
-          accessibilityRole="button">
-          <Feather name="arrow-left" size={24} color="#333" />
-        </TouchableOpacity>
-        <Text className="text-lg font-semibold text-gray-800">{t('settings.title')}</Text>
-        <View className="w-10" />
-      </View>
-
-      {/* Content */}
-      <View className="flex-1 p-4">
+    <SafeAreaView className="flex-1 bg-gray-50" edges={['bottom', 'left', 'right']}>
+      <Header title={t('common.settings.title')} showBackButton showSettingsButton={false} />
+      <ScrollView className="flex-1">
         {/* Language Settings */}
         <View className="mt-6 rounded-xl bg-white p-4 shadow-sm">
           <Text className="mb-4 text-base font-semibold text-gray-800">
@@ -126,7 +111,7 @@ export default function SettingsScreen() {
             {isLoading && <ActivityIndicator size="small" color="#3B82F6" />}
           </TouchableOpacity>
         </View>
-      </View>
+      </ScrollView>
 
       {/* Language Selection Modal */}
       <Modal

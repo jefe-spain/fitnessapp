@@ -1,11 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useTranslation } from '@i18n/core';
+import { useNutritionStore } from '@store/nutrition';
 import { useLocalSearchParams } from 'expo-router';
 import { useEffect } from 'react';
 import { View, Text, Image, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-import { useNutritionStore } from '../../../store/nutrition';
 
 export default function MealDetailScreen() {
   const { t } = useTranslation();
@@ -39,7 +38,7 @@ export default function MealDetailScreen() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1 bg-gray-50" edges={['bottom', 'left', 'right']}>
       <ScrollView className="pb-6">
         {meal.imageUrl ? (
           <Image source={{ uri: meal.imageUrl }} className="h-64 w-full object-cover" />
