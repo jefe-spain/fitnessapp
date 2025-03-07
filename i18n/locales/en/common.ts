@@ -37,6 +37,7 @@ export default {
     continueAsGuest: 'Continue as guest',
     dontHaveAccount: "Don't have an account?",
     alreadyHaveAccount: 'Already have an account?',
+    login: 'Login',
     signUp: 'Sign up',
     termsText: 'By continuing, you agree to our',
     termsOfService: 'Terms of Service',

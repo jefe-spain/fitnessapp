@@ -143,7 +143,7 @@ export default function EmailSignInScreen() {
               {isLoading ? (
                 <ActivityIndicator size="small" color="#ffffff" />
               ) : (
-                <Text className="text-base font-semibold text-white">{t('settings.login')}</Text>
+                <Text className="text-base font-semibold text-white">{t('common.auth.login')}</Text>
               )}
             </Pressable>
 

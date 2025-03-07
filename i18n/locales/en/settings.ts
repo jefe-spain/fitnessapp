@@ -24,5 +24,11 @@ export default {
     termsOfService: 'Terms of Service',
     privacyPolicy: 'Privacy Policy'
   },
-  logout: 'Logout'
+  logout: {
+    title: 'Logout',
+    confirmTitle: 'Are you sure you want to logout?',
+    confirmMessage: 'If you logout, you will have to login again.',
+    cancel: 'Cancel',
+    confirmButton: 'Logout'
+  }
 };

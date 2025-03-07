@@ -1,9 +1,9 @@
 import { Feather } from '@expo/vector-icons';
 import { useTranslation } from '@i18n/core';
 import { Image } from 'expo-image';
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
-import { ScrollView, Text, View, ActivityIndicator } from 'react-native';
+import { ScrollView, Text, View, ActivityIndicator, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 // Define TypeScript interface for workout
@@ -105,25 +105,32 @@ export default function WorkoutDetailScreen() {
 
   if (isLoading) {
     return (
-      <SafeAreaView className="flex-1 items-center justify-center">
-        <ActivityIndicator size="large" color="#0000ff" />
+      <SafeAreaView
+        className="flex-1 items-center justify-center"
+        edges={['bottom', 'left', 'right']}>
+        <View className="flex-1 items-center justify-center">
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
       </SafeAreaView>
     );
   }
 
   if (!workout) {
     return (
-      <SafeAreaView className="flex-1 items-center justify-center p-6">
-        <Text className="mb-4 text-center text-lg font-bold">
-          {t('workout.detail.notFound', 'Workout not found')}
-        </Text>
+      <SafeAreaView
+        className="flex-1 items-center justify-center p-6"
+        edges={['bottom', 'left', 'right']}>
+        <View className="flex-1 items-center justify-center">
+          <Text className="mb-4 text-center text-lg font-bold">
+            {t('workout.detail.notFound', 'Workout not found')}
+          </Text>
+        </View>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
-      <Stack.Screen options={{ title: workout.name }} />
+    <SafeAreaView className="flex-1 bg-gray-50" edges={['bottom', 'left', 'right']}>
       <ScrollView className="pb-6">
         <View className="h-64 w-full bg-gray-100">
           <Image
@@ -136,7 +143,9 @@ export default function WorkoutDetailScreen() {
             transition={300}
             cachePolicy="memory-disk"
             onLoad={() => setImageLoaded(true)}
-            accessibilityLabel={`Image for ${workout.name}`}
+            accessibilityLabel={t('workout.detail.imageAlt', 'Image for {{name}}', {
+              name: workout.name
+            })}
           />
         </View>
 
@@ -146,15 +155,21 @@ export default function WorkoutDetailScreen() {
           <View className="mb-6 flex-row flex-wrap">
             <View className="mb-2 mr-4 flex-row items-center">
               <Feather name="clock" size={20} color="#666" />
-              <Text className="ml-1 text-sm text-gray-600">{workout.duration}</Text>
+              <Text className="ml-1 text-sm text-gray-600">
+                {t('workout.detail.duration', '{{duration}}', { duration: workout.duration })}
+              </Text>
             </View>
             <View className="mb-2 mr-4 flex-row items-center">
               <Feather name="activity" size={20} color="#666" />
-              <Text className="ml-1 text-sm text-gray-600">{workout.level}</Text>
+              <Text className="ml-1 text-sm text-gray-600">
+                {t('workout.detail.level', '{{level}}', { level: workout.level })}
+              </Text>
             </View>
             <View className="mb-2 mr-4 flex-row items-center">
               <Feather name="target" size={20} color="#666" />
-              <Text className="ml-1 text-sm text-gray-600">{workout.focus}</Text>
+              <Text className="ml-1 text-sm text-gray-600">
+                {t('workout.detail.focus', '{{focus}}', { focus: workout.focus })}
+              </Text>
             </View>
           </View>
 
@@ -202,15 +217,18 @@ export default function WorkoutDetailScreen() {
           </View>
 
           <View className="mb-6">
-            <Text className="mb-3 text-lg font-bold">{t('workout.detail.tips', 'Tips')}</Text>
-            <View className="rounded-lg bg-blue-50 p-4">
-              <Text className="text-base text-gray-700">
-                {t(
-                  'workout.detail.tipContent',
-                  'Remember to warm up properly before starting this workout and cool down afterward. Stay hydrated and listen to your body.'
-                )}
+            <Text className="mb-3 text-lg font-bold">
+              {t('workout.detail.startWorkout', 'Start Workout')}
+            </Text>
+            <Pressable
+              className="rounded-lg bg-blue-500 px-4 py-3"
+              style={({ pressed }) => (pressed ? { opacity: 0.8 } : {})}
+              accessibilityLabel={t('workout.detail.startWorkoutButton', 'Start this workout')}
+              accessibilityRole="button">
+              <Text className="text-center text-base font-semibold text-white">
+                {t('workout.detail.beginWorkout', 'Begin Workout')}
               </Text>
-            </View>
+            </Pressable>
           </View>
         </View>
       </ScrollView>
