@@ -188,7 +188,7 @@ export default function SignUpScreen() {
             <View className="mt-6 flex-row justify-center">
               <Text className="text-gray-600">{t('common.auth.alreadyHaveAccount')} </Text>
               <Pressable onPress={() => router.push('/auth/email')}>
-                <Text className="font-semibold text-blue-500">{t('settings.login')}</Text>
+                <Text className="font-semibold text-blue-500">{t('common.auth.login')}</Text>
               </Pressable>
             </View>
           </View>
