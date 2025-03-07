@@ -24,5 +24,11 @@ export default {
     termsOfService: 'Términos de Servicio',
     privacyPolicy: 'Política de Privacidad'
   },
-  logout: 'Cerrar Sesión'
+  logout: {
+    title: 'Cerrar Sesión',
+    confirmTitle: '¿Estás seguro de querer cerrar sesión?',
+    confirmMessage: 'Si cierra sesión, tendrá que iniciar sesión nuevamente.',
+    cancel: 'Cancelar',
+    confirmButton: 'Cerrar Sesión'
+  }
 };
