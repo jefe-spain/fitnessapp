@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { Message, Conversation } from '~/app/(tabs)/chat/types';
+import { Message, Conversation, MessageStatus } from '~/app/(tabs)/chat/types';
 
 interface ChatState {
   messages: Record<number, Message[]>;
@@ -12,6 +12,7 @@ interface ChatState {
   fetchMessages: (conversationId: number) => Promise<void>;
   sendMessage: (conversationId: number, text: string) => Promise<void>;
   fetchConversations: () => Promise<void>;
+  updateMessageStatus: (conversationId: number, messageId: number, status: MessageStatus) => void;
 }
 
 // Mock data for initial conversations
@@ -19,9 +20,9 @@ const mockConversations: Conversation[] = [
   {
     id: 1,
     trainerId: 101,
-    trainerName: 'Alex Johnson',
+    trainerName: 'Sarah Mitchell',
     trainerAvatar:
-      'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?auto=format&fit=crop&w=200&q=80',
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80',
     lastMessage: 'Great work on your workout yesterday!',
     lastMessageTime: '9:36 AM',
     unreadCount: 1
@@ -41,7 +42,8 @@ const initialMessages: Record<number, Message[]> = {
       id: 2,
       text: "Thanks! I'm feeling much stronger already.",
       sender: 'user',
-      time: '9:35 AM'
+      time: '9:35 AM',
+      status: 'read'
     },
     {
       id: 3,
@@ -95,7 +97,8 @@ export const useChatStore = create<ChatState>((set, get) => ({
       id: currentMessages.length + 1,
       text: text.trim(),
       sender: 'user',
-      time: currentTime
+      time: currentTime,
+      status: 'sent' // Initial status is 'sent'
     };
 
     // Update messages with user message
@@ -120,9 +123,18 @@ export const useChatStore = create<ChatState>((set, get) => ({
       )
     }));
 
+    // Simulate message status updates
+    setTimeout(() => {
+      // Update to 'delivered' after 1 second
+      get().updateMessageStatus(conversationId, newUserMessage.id, 'delivered');
+    }, 1000);
+
     // Simulate trainer response after a delay
     setTimeout(
       async () => {
+        // Update to 'read' when trainer responds
+        get().updateMessageStatus(conversationId, newUserMessage.id, 'read');
+
         const responses = [
           'Great! Keep up the good work.',
           "Awesome! You're making great progress.",
@@ -167,8 +179,8 @@ export const useChatStore = create<ChatState>((set, get) => ({
           )
         }));
       },
-      1000 + Math.random() * 1000
-    ); // Random delay between 1-2 seconds
+      2000 + Math.random() * 1000
+    ); // Random delay between 2-3 seconds
   },
 
   fetchConversations: async () => {
@@ -190,5 +202,21 @@ export const useChatStore = create<ChatState>((set, get) => ({
         error: error instanceof Error ? error.message : 'Failed to fetch conversations'
       });
     }
+  },
+
+  updateMessageStatus: (conversationId: number, messageId: number, status: MessageStatus) => {
+    set((state) => {
+      const conversationMessages = state.messages[conversationId] || [];
+      const updatedMessages = conversationMessages.map((message) =>
+        message.id === messageId && message.sender === 'user' ? { ...message, status } : message
+      );
+
+      return {
+        messages: {
+          ...state.messages,
+          [conversationId]: updatedMessages
+        }
+      };
+    });
   }
 }));
