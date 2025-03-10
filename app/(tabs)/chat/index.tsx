@@ -1,13 +1,13 @@
 import { Feather } from '@expo/vector-icons';
 import { useTranslation } from '@i18n/core';
+import { useChatStore } from '@store/chat';
+import { useHeaderStore } from '@store/header';
 import { Link } from 'expo-router';
 import { useEffect } from 'react';
 import { View, Text, FlatList, Pressable, ActivityIndicator, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { Conversation } from './types';
-
-import { useChatStore } from '~/store/chat';
 
 // Professional color palette - matching the one in [id].tsx
 const COLORS = {
@@ -25,6 +25,25 @@ const COLORS = {
 export default function ChatScreen() {
   const { t } = useTranslation();
   const { conversations, isLoading, error, fetchConversations } = useChatStore();
+
+  // Use the header store to set the title
+  const { setTitle, activeTab } = useHeaderStore();
+
+  // Set the header title when the component mounts
+  useEffect(() => {
+    // Only set the title if this is the active tab or no active tab is set
+    if (!activeTab || activeTab === t('navigation.tabs.chat')) {
+      setTitle(t('navigation.tabs.chat'));
+    }
+
+    // Reset the title when the component unmounts
+    return () => {
+      // Only reset if this component set the title
+      if (activeTab === t('navigation.tabs.chat')) {
+        setTitle('');
+      }
+    };
+  }, [setTitle, activeTab, t]);
 
   // Load conversations
   useEffect(() => {

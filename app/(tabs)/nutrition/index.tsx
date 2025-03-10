@@ -1,4 +1,5 @@
 import { useTranslation } from '@i18n/core';
+import { useHeaderStore } from '@store/header';
 import { useNutritionStore } from '@store/nutrition';
 import { useEffect } from 'react';
 import { View, Text, FlatList, ActivityIndicator } from 'react-native';
@@ -9,6 +10,16 @@ import { MealCard } from './components/MealCard';
 export default function NutritionIndexScreen() {
   const { t } = useTranslation();
   const { meals, isLoading, error, fetchMeals } = useNutritionStore();
+  // Use the header store to set the title
+  const setHeaderTitle = useHeaderStore((state) => state.setTitle);
+
+  // Set the header title when the component mounts
+  useEffect(() => {
+    setHeaderTitle(t('navigation.tabs.nutrition'));
+
+    // Reset the title when the component unmounts
+    return () => setHeaderTitle('');
+  }, [setHeaderTitle, t]);
 
   useEffect(() => {
     fetchMeals();

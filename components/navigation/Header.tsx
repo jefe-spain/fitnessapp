@@ -1,9 +1,13 @@
 import { Feather } from '@expo/vector-icons';
 import { useTranslation } from '@i18n/core';
+import { useHeaderStore } from '@store/header';
 import { useRouter, usePathname } from 'expo-router';
 import { useCallback, useMemo } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+// Define which paths should show the back button
+const NESTED_PATHS = ['[id]'];
 
 interface HeaderProps {
   title?: string;
@@ -13,7 +17,7 @@ interface HeaderProps {
 }
 
 export function Header({
-  title,
+  title: propTitle,
   showBackButton,
   showSettingsButton = true,
   onBackPress
@@ -23,6 +27,10 @@ export function Header({
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
 
+  // Get title from store, fallback to prop title
+  const { title: storeTitle } = useHeaderStore();
+  const displayTitle = storeTitle || propTitle;
+
   // Determine if we should show the back button based on the current path
   // if not explicitly provided via props
   const shouldShowBackButton = useMemo(() => {
@@ -31,7 +39,10 @@ export function Header({
     // Check if we're in a nested route within a tab
     // For example: /(tabs)/nutrition/[id] should show back button
     const pathParts = pathname.split('/');
-    return pathParts.length > 2;
+
+    // Check if the last part of the path is in the NESTED_PATHS array
+    const lastPathPart = pathParts[pathParts.length - 1];
+    return NESTED_PATHS.includes(lastPathPart) || pathParts.length > 2;
   }, [pathname, showBackButton]);
 
   const navigateBack = useCallback(() => {
@@ -66,11 +77,11 @@ export function Header({
         </View>
 
         {/* Center - Title */}
-        {title && (
+        {displayTitle && (
           <Text
             className="flex-1 text-center text-lg font-semibold text-gray-800"
             numberOfLines={1}>
-            {title}
+            {displayTitle}
           </Text>
         )}
 
