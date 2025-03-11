@@ -1,5 +1,6 @@
 import { Feather } from '@expo/vector-icons';
 import { useTranslation } from '@i18n/core';
+import { useHeaderStore } from '@store/header';
 import { useRouter, usePathname } from 'expo-router';
 import { useCallback, useMemo } from 'react';
 import { View, Text, Pressable } from 'react-native';
@@ -18,6 +19,7 @@ export function BottomNav() {
   const pathname = usePathname();
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
+  const setActiveTab = useHeaderStore((state) => state.setActiveTab);
 
   const navItems: NavItem[] = useMemo(
     () => [
@@ -62,10 +64,20 @@ export function BottomNav() {
 
   const handleNavigation = useCallback(
     (href: string) => {
+      // Extract the tab name from the href
+      const tabPath = href.split('/').pop();
+
+      // Set the active tab in the header store
+      if (tabPath) {
+        // For the home tab, use 'home' as the tab name
+        const tabName = tabPath === '(tabs)' ? 'home' : tabPath;
+        setActiveTab(t(`navigation.tabs.${tabName}`));
+      }
+
       // Using router.navigate for better tab navigation
       router.navigate(href as any);
     },
-    [router]
+    [router, setActiveTab, t]
   );
 
   return (

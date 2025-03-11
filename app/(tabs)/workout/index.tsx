@@ -1,5 +1,6 @@
 import { Feather } from '@expo/vector-icons';
 import { useTranslation } from '@i18n/core';
+import { useHeaderStore } from '@store/header';
 import { Image } from 'expo-image';
 import { Link } from 'expo-router';
 import { useState, useEffect } from 'react';
@@ -51,6 +52,25 @@ export default function WorkoutScreen() {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(true);
   const [workouts, setWorkouts] = useState<Workout[]>([]);
+
+  // Use the header store to set the title
+  const { setTitle, activeTab } = useHeaderStore();
+
+  // Set the header title when the component mounts
+  useEffect(() => {
+    // Only set the title if this is the active tab or no active tab is set
+    if (!activeTab || activeTab === t('navigation.tabs.workout')) {
+      setTitle(t('navigation.tabs.workout'));
+    }
+
+    // Reset the title when the component unmounts
+    return () => {
+      // Only reset if this component set the title
+      if (activeTab === t('navigation.tabs.workout')) {
+        setTitle('');
+      }
+    };
+  }, [setTitle, activeTab, t]);
 
   useEffect(() => {
     // Simulate loading data
@@ -141,7 +161,7 @@ export default function WorkoutScreen() {
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <WorkoutCard workout={item} />}
         contentContainerClassName="p-4"
-        showsVerticalScrollIndicator={false}
+        showsVerticalScrollIndicator
         ListEmptyComponent={
           <View className="items-center justify-center p-8">
             <Text className="text-center text-lg text-gray-500">

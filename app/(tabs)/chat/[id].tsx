@@ -1,5 +1,7 @@
 import { Feather } from '@expo/vector-icons';
 import { useTranslation } from '@i18n/core';
+import { useChatStore } from '@store/chat';
+import { useHeaderStore } from '@store/header';
 import { useLocalSearchParams } from 'expo-router';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
@@ -17,8 +19,6 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { MessageBubble } from './components/MessageBubble';
 
-import { useChatStore } from '~/store/chat';
-
 // Professional color palette
 const COLORS = {
   primary: '#D4A72C', // Professional yellow
@@ -28,7 +28,8 @@ const COLORS = {
   border: '#E0E0E0',
   text: '#333333',
   placeholder: '#999999',
-  disabled: '#E0E0E0'
+  disabled: '#E0E0E0',
+  error: '#f87171'
 };
 
 // Constants for layout calculations
@@ -41,12 +42,33 @@ export default function ChatDetailScreen() {
   const conversationId = parseInt(id, 10);
   const insets = useSafeAreaInsets();
 
-  const { messages, isLoading, error, fetchMessages, sendMessage } = useChatStore();
+  const { messages, conversations, isLoading, error, fetchMessages, sendMessage } = useChatStore();
+
+  // Use the header store to set the title
+  const { setTitle } = useHeaderStore();
 
   const [newMessage, setNewMessage] = useState('');
   const flatListRef = useRef<FlatList>(null);
 
+  // Get the current conversation
+  const conversation = conversations.find((c) => c.id === conversationId);
   const currentMessages = messages[conversationId] || [];
+
+  // Set the header title when the conversation data is available
+  useEffect(() => {
+    if (conversation) {
+      // Always set the title for detail pages, regardless of active tab
+      setTitle(conversation.trainerName);
+    } else {
+      setTitle(t('chat.conversation', 'Conversation'));
+    }
+
+    // Reset the title when the component unmounts
+    return () => {
+      // For detail pages, we always reset the title
+      setTitle('');
+    };
+  }, [conversation, setTitle, t]);
 
   // Load messages for this conversation
   useEffect(() => {
@@ -86,10 +108,10 @@ export default function ChatDetailScreen() {
     return (
       <SafeAreaView className="flex-1" edges={['bottom', 'left', 'right']}>
         <View className="flex-1 items-center justify-center p-6">
-          <Feather name="alert-circle" size={40} color="#f87171" />
+          <Feather name="alert-circle" size={40} color={COLORS.error} />
           <Text className="mt-4 text-center text-base text-red-500">{error}</Text>
           <Pressable
-            style={[styles.retryButton]}
+            style={styles.retryButton}
             onPress={() => fetchMessages(conversationId)}
             accessibilityLabel={t('common.tryAgain', 'Try again')}
             accessibilityRole="button">
