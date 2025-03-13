@@ -1,6 +1,6 @@
 ---
-description: when writting new code and follow common patterns
-globs: *.tsx
+description: 
+globs: mobile/**/*.tsx
 alwaysApply: false
 ---
 

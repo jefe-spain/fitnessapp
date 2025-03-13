@@ -42,3 +42,5 @@ npm-shrinkwrap.json
 
 # Supabase
 supabase/
+
+prisma/migrations/
