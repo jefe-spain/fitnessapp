@@ -6,15 +6,15 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Panel de Administración de Fitness',
-  description: 'Panel de administración para gestionar clientes y planes de fitness'
+  title: 'FitnessAdmin',
+  description: 'Fitness administration dashboard'
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}>
-      <html lang="es" data-theme="nord">
-        <body className={inter.className}>{children}</body>
+      <html lang="en" data-theme="bumblebee" className="h-full">
+        <body className={`${inter.className} min-h-full bg-base-200`}>{children}</body>
       </html>
     </ClerkProvider>
   );
