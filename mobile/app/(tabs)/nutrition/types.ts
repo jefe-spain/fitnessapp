@@ -18,3 +18,8 @@ export interface Meal {
   instructions: string[];
   tips?: string;
 }
+
+// This default export is needed to prevent Expo Router from treating this file as a route
+export default function NutritionTypes() {
+  return null;
+}

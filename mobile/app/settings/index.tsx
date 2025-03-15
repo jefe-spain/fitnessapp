@@ -4,7 +4,7 @@ import { useTranslation, LANGUAGE_OPTIONS } from '@i18n/core';
 import { useAuthStore } from '@store/auth';
 import { useLanguageStore } from '@store/language';
 import { LanguageOption } from '@store/language/types';
-import { useRouter } from 'expo-router';
+import { useRouter, Link } from 'expo-router';
 import { useCallback, useState, useEffect } from 'react';
 import {
   View,
@@ -14,9 +14,12 @@ import {
   FlatList,
   Alert,
   ActivityIndicator,
-  ScrollView
+  ScrollView,
+  StyleSheet
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { SignedInContent } from '../../components/auth/AuthStatus';
 
 export default function SettingsScreen() {
   const router = useRouter();
@@ -111,6 +114,62 @@ export default function SettingsScreen() {
             {isLoading && <ActivityIndicator size="small" color="#3B82F6" />}
           </TouchableOpacity>
         </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('settings.account')}</Text>
+
+          <SignedInContent>
+            <Link href="/settings/profile" asChild>
+              <TouchableOpacity style={styles.menuItem}>
+                <View style={styles.menuItemContent}>
+                  <Feather name="user" size={20} color="#3B82F6" />
+                  <Text style={styles.menuItemText}>{t('settings.profile')}</Text>
+                </View>
+                <Feather name="chevron-right" size={20} color="#999" />
+              </TouchableOpacity>
+            </Link>
+          </SignedInContent>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('settings.preferences')}</Text>
+
+          <TouchableOpacity style={styles.menuItem}>
+            <View style={styles.menuItemContent}>
+              <Feather name="globe" size={20} color="#3B82F6" />
+              <Text style={styles.menuItemText}>{t('settings.language')}</Text>
+            </View>
+            <Feather name="chevron-right" size={20} color="#999" />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.menuItem}>
+            <View style={styles.menuItemContent}>
+              <Feather name="bell" size={20} color="#3B82F6" />
+              <Text style={styles.menuItemText}>{t('settings.notifications')}</Text>
+            </View>
+            <Feather name="chevron-right" size={20} color="#999" />
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>{t('settings.about')}</Text>
+
+          <TouchableOpacity style={styles.menuItem}>
+            <View style={styles.menuItemContent}>
+              <Feather name="info" size={20} color="#3B82F6" />
+              <Text style={styles.menuItemText}>{t('settings.aboutApp')}</Text>
+            </View>
+            <Feather name="chevron-right" size={20} color="#999" />
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.menuItem}>
+            <View style={styles.menuItemContent}>
+              <Feather name="shield" size={20} color="#3B82F6" />
+              <Text style={styles.menuItemText}>{t('settings.privacy')}</Text>
+            </View>
+            <Feather name="chevron-right" size={20} color="#999" />
+          </TouchableOpacity>
+        </View>
       </ScrollView>
 
       {/* Language Selection Modal */}
@@ -152,3 +211,49 @@ export default function SettingsScreen() {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f8f9fa'
+  },
+  header: {
+    padding: 20,
+    paddingTop: 60,
+    backgroundColor: '#fff',
+    marginBottom: 10
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold'
+  },
+  section: {
+    backgroundColor: '#fff',
+    marginBottom: 10,
+    paddingVertical: 10
+  },
+  sectionTitle: {
+    fontSize: 14,
+    color: '#666',
+    marginLeft: 20,
+    marginBottom: 10,
+    marginTop: 5,
+    textTransform: 'uppercase',
+    fontWeight: '500'
+  },
+  menuItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 15,
+    paddingHorizontal: 20
+  },
+  menuItemContent: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  menuItemText: {
+    fontSize: 16,
+    marginLeft: 15
+  }
+});

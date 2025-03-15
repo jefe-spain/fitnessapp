@@ -1,11 +1,11 @@
 export type MessageStatus = 'sent' | 'delivered' | 'read' | null;
 
 export interface Message {
-  id: number;
+  id: string;
   text: string;
   sender: 'user' | 'trainer';
   time: string;
-  status?: MessageStatus; // Status for user messages: sent, delivered, read
+  status?: 'sent' | 'delivered' | 'read';
 }
 
 export interface Conversation {
@@ -16,4 +16,9 @@ export interface Conversation {
   lastMessage: string;
   lastMessageTime: string;
   unreadCount: number;
+}
+
+// This default export is needed to prevent Expo Router from treating this file as a route
+export default function ChatTypes() {
+  return null;
 }
