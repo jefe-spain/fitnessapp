@@ -1,32 +1,13 @@
 import { useTranslation } from '@i18n/core';
-import { StyleSheet, View, Text } from 'react-native';
+import { View, Text } from 'react-native';
 
 export default function StatsScreen() {
   const { t } = useTranslation();
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{t('navigation.tabs.stats')}</Text>
-      <Text style={styles.subtitle}>{t('common.app.tagline')}</Text>
+    <View className="flex-1 items-center justify-center p-6">
+      <Text className="mb-2 text-2xl font-bold">{t('navigation.tabs.stats')}</Text>
+      <Text className="text-center text-base text-gray-500">{t('common.app.tagline')}</Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 8
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#666',
-    textAlign: 'center'
-  }
-});

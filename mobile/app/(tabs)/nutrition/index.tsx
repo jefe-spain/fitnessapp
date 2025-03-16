@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { View, Text, FlatList, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { MealCard } from './components/MealCard';
+import MealCard from './components/MealCard';
 
 export default function NutritionIndexScreen() {
   const { t } = useTranslation();

@@ -12,12 +12,11 @@ import {
   Pressable,
   KeyboardAvoidingView,
   Platform,
-  ActivityIndicator,
-  StyleSheet
+  ActivityIndicator
 } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { MessageBubble } from './components/MessageBubble';
+import MessageBubble from './components/MessageBubble';
 
 // Professional color palette
 const COLORS = {
@@ -111,11 +110,11 @@ export default function ChatDetailScreen() {
           <Feather name="alert-circle" size={40} color={COLORS.error} />
           <Text className="mt-4 text-center text-base text-red-500">{error}</Text>
           <Pressable
-            style={styles.retryButton}
+            className="mt-4 rounded-lg bg-[#D4A72C] px-5 py-2.5"
             onPress={() => fetchMessages(conversationId)}
             accessibilityLabel={t('common.tryAgain', 'Try again')}
             accessibilityRole="button">
-            <Text style={styles.retryButtonText}>{t('common.tryAgain', 'Try again')}</Text>
+            <Text className="font-medium text-white">{t('common.tryAgain', 'Try again')}</Text>
           </Pressable>
         </View>
       </SafeAreaView>
@@ -123,12 +122,11 @@ export default function ChatDetailScreen() {
   }
 
   return (
-    <SafeAreaView style={styles.container} edges={['left', 'right']}>
+    <SafeAreaView className="flex-1 bg-[#F8F8F8]" edges={['left', 'right']}>
       {/* Main container with KeyboardAvoidingView to handle keyboard appearance */}
       <KeyboardAvoidingView
-        style={styles.keyboardAvoidingContainer}
+        className="flex-1"
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        // Adjust offset to account for bottom navigation bar and safe area
         keyboardVerticalOffset={Platform.OS === 'ios' ? BOTTOM_NAV_HEIGHT + 90 : BOTTOM_NAV_HEIGHT}>
         {/* Chat messages area */}
         <FlatList
@@ -136,50 +134,47 @@ export default function ChatDetailScreen() {
           data={currentMessages}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => <MessageBubble message={item} />}
-          contentContainerStyle={[
-            styles.chatContainer,
-            // Add bottom padding to ensure last message is visible above input
-            { paddingBottom: 16 }
-          ]}
+          contentContainerStyle={{ padding: 16, paddingBottom: 16 }}
           showsVerticalScrollIndicator
           ListEmptyComponent={
-            <View style={styles.emptyContainer}>
-              <Feather name="message-square" size={40} color={COLORS.disabled} />
-              <Text style={styles.emptyText}>{t('chat.noMessages', 'No messages yet')}</Text>
+            <View className="flex-1 items-center justify-center py-10">
+              <Feather name="message-square" size={40} className="text-gray-300" />
+              <Text className="mt-4 text-center text-base text-gray-400">
+                {t('chat.noMessages', 'No messages yet')}
+              </Text>
             </View>
           }
         />
 
         {/* Professional yellow-themed input container */}
         <View
-          style={[
-            styles.inputContainer,
-            // Add bottom margin to avoid overlap with bottom navigation
-            { marginBottom: insets.bottom + BOTTOM_NAV_HEIGHT }
-          ]}>
+          className="w-full border-t border-gray-200 bg-[#F8F8F8] p-2.5"
+          style={{ marginBottom: insets.bottom + BOTTOM_NAV_HEIGHT }}>
           {/* Text input with professional styling */}
-          <View style={styles.textInputWrapper}>
+          <View className="flex-row items-end rounded-3xl border border-gray-200 bg-white px-4 py-2.5 shadow-sm">
             <TextInput
-              style={styles.textInput}
+              className="max-h-[100px] flex-1 py-2 text-base text-[#333333]"
               placeholder={t('chat.inputPlaceholder', 'Type a message...')}
               value={newMessage}
               onChangeText={setNewMessage}
               multiline
               maxLength={500}
-              placeholderTextColor={COLORS.placeholder}
+              placeholderTextColor="#999999"
             />
 
             {/* Send button that changes appearance when active */}
             <Pressable
               onPress={handleSendMessage}
               disabled={!newMessage.trim()}
-              style={[
-                styles.sendButton,
-                { backgroundColor: newMessage.trim() ? COLORS.primary : COLORS.disabled }
-              ]}
+              className={`-mb-0.5 ml-2.5 h-[40px] w-[40px] items-center justify-center rounded-full
+                ${newMessage.trim() ? 'bg-[#D4A72C]' : 'bg-gray-200'}`}
               accessibilityLabel={t('chat.sendButton', 'Send message')}
               accessibilityRole="button">
-              <Feather name="send" size={20} color={newMessage.trim() ? 'white' : '#888'} />
+              <Feather
+                name="send"
+                size={20}
+                className={newMessage.trim() ? 'text-white' : 'text-gray-400'}
+              />
             </Pressable>
           </View>
         </View>
@@ -187,79 +182,3 @@ export default function ChatDetailScreen() {
     </SafeAreaView>
   );
 }
-
-// Styles for professional yellow-themed chat interface
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.background
-  },
-  keyboardAvoidingContainer: {
-    flex: 1
-  },
-  chatContainer: {
-    padding: 16
-  },
-  emptyContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 40
-  },
-  emptyText: {
-    marginTop: 16,
-    textAlign: 'center',
-    color: COLORS.placeholder,
-    fontSize: 16
-  },
-  inputContainer: {
-    borderTopWidth: 1,
-    borderTopColor: COLORS.border,
-    backgroundColor: COLORS.background,
-    padding: 10,
-    width: '100%'
-  },
-  textInputWrapper: {
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    backgroundColor: COLORS.inputBackground,
-    borderRadius: 25,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 1
-  },
-  textInput: {
-    flex: 1,
-    fontSize: 16,
-    maxHeight: 100, // Limit height for very long messages
-    paddingTop: 8,
-    paddingBottom: 8,
-    color: COLORS.text
-  },
-  sendButton: {
-    width: SEND_BUTTON_SIZE,
-    height: SEND_BUTTON_SIZE,
-    borderRadius: SEND_BUTTON_SIZE / 2,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 10,
-    marginBottom: 2
-  },
-  retryButton: {
-    marginTop: 16,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    backgroundColor: COLORS.primary,
-    borderRadius: 8
-  },
-  retryButtonText: {
-    color: 'white',
-    fontWeight: '500'
-  }
-});

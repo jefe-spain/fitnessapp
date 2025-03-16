@@ -8,7 +8,7 @@ interface MealCardProps {
   meal: Meal;
 }
 
-export function MealCard({ meal }: MealCardProps) {
+export default function MealCard({ meal }: MealCardProps) {
   const router = useRouter();
 
   const handlePress = () => {
