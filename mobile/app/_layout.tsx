@@ -1,11 +1,10 @@
 import '../global.css';
 import '@i18n/core'; // Import i18n configuration
 
+import { AuthProvider } from '@components/auth/AuthProvider';
+import { useLanguageStore } from '@store/language';
 import { Stack } from 'expo-router';
 import { useEffect } from 'react';
-
-import { AuthProvider } from '../components/auth/AuthProvider';
-import { useLanguageStore } from '../store/language';
 
 export default function RootLayout() {
   const { initializeLanguage } = useLanguageStore();

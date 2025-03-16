@@ -1,9 +1,8 @@
+import { useAuthStore } from '@store/auth';
+import { supabase } from '@utilities/supabase';
 import { useRouter } from 'expo-router';
 import { useEffect } from 'react';
 import { View, ActivityIndicator, Text } from 'react-native';
-
-import { useAuthStore } from '../../store/auth';
-import { supabase } from '../../utilities/supabase';
 
 export default function AuthCallback() {
   const router = useRouter();

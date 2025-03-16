@@ -1,10 +1,9 @@
+import { useAuthStore } from '@store/auth';
+import { supabase } from '@utilities/supabase';
+import { extractUserData } from '@utilities/supabase/session';
 import { useRouter, useSegments } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { View, ActivityIndicator } from 'react-native';
-
-import { useAuthStore } from '../../store/auth';
-import { supabase } from '../../utilities/supabase';
-import { extractUserData } from '../../utilities/supabase/session';
 
 // Protected routes require authentication
 const PROTECTED_SEGMENTS = ['(tabs)', 'settings'];
