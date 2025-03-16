@@ -5,10 +5,10 @@
     "baseUrl": ".",
     "jsx": "react-jsx",
     "paths": {
-      "~/*": ["*"],
-      "@utilities/*": ["utilities/*"],
+      "@app/*": ["app/*"],
       "@components/*": ["components/*"],
       "@store/*": ["store/*"],
+      "@utilities/*": ["utilities/*"],
       "@i18n/*": ["i18n/*"]
     }
   },

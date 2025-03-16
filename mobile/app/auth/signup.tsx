@@ -1,4 +1,6 @@
 import { Feather } from '@expo/vector-icons';
+import { useTranslation } from '@i18n/core';
+import { useAuthStore } from '@store/auth';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { useState, useEffect } from 'react';
@@ -13,9 +15,6 @@ import {
   ActivityIndicator
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-import { useTranslation } from '../../i18n/core';
-import { useAuthStore } from '../../store/auth';
 
 export default function SignUpScreen() {
   const { t } = useTranslation();

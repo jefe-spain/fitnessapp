@@ -1,6 +1,7 @@
 import { Feather } from '@expo/vector-icons';
 import { useTranslation } from '@i18n/core';
 import { useAuthStore } from '@store/auth';
+import { supabase } from '@utilities/supabase';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
@@ -15,8 +16,6 @@ import {
   ActivityIndicator
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-import { supabase } from '../../utilities/supabase';
 
 // Required for OAuth in Expo
 WebBrowser.maybeCompleteAuthSession();

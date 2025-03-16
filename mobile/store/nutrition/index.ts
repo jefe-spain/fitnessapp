@@ -1,6 +1,5 @@
+import type { Meal } from '@app/(tabs)/nutrition/types';
 import { create } from 'zustand';
-
-import type { Meal } from '../../app/(tabs)/nutrition/types';
 
 // Mock data for meals
 const mockMeals: Meal[] = [
