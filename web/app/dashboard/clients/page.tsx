@@ -54,7 +54,7 @@ export default function ClientsPage() {
   
   // Apply filters whenever any filter changes
   useEffect(() => {
-    let results = allClients;
+    let results = [...allClients];
     
     // Apply search filter
     if (searchQuery) {
@@ -67,26 +67,33 @@ export default function ClientsPage() {
     
     // Apply program filter
     if (programFilter !== "all") {
-      results = results.filter(client => {
-        const normalizedProgram = client.program.toLowerCase().replace(/\s+/g, '-');
-        return normalizedProgram === programFilter;
-      });
+      results = results.filter(client => 
+        client.program.toLowerCase().replace(/\s+/g, '-') === programFilter
+      );
     }
     
     // Apply status filter
     if (statusFilter !== "all") {
-      results = results.filter(client => {
-        const normalizedStatus = client.status.toLowerCase().replace(/\s+/g, '-');
-        return normalizedStatus === statusFilter;
-      });
+      results = results.filter(client => 
+        client.status.toLowerCase().replace(/\s+/g, '-') === statusFilter
+      );
     }
     
     setFilteredClients(results);
-  }, [searchQuery, programFilter, statusFilter, allClients]);
+  }, [searchQuery, programFilter, statusFilter]);
   
   // Get unique programs and statuses for filter options
   const programs = Array.from(new Set(allClients.map(client => client.program)));
   const statuses = Array.from(new Set(allClients.map(client => client.status)));
+
+  // Handlers for Select changes
+  const handleProgramChange = (value: string) => {
+    setProgramFilter(value);
+  };
+  
+  const handleStatusChange = (value: string) => {
+    setStatusFilter(value);
+  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -116,7 +123,10 @@ export default function ClientsPage() {
         </div>
         
         <div className="grid grid-cols-2 md:flex gap-4">
-          <Select value={programFilter} onValueChange={setProgramFilter}>
+          <Select 
+            defaultValue="all"
+            onValueChange={handleProgramChange}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="All Programs" />
             </SelectTrigger>
@@ -133,7 +143,10 @@ export default function ClientsPage() {
             </SelectContent>
           </Select>
           
-          <Select value={statusFilter} onValueChange={setStatusFilter}>
+          <Select 
+            defaultValue="all"
+            onValueChange={handleStatusChange}
+          >
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="All Status" />
             </SelectTrigger>
