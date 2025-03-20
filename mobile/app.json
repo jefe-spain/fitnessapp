@@ -3,7 +3,6 @@
     "name": "fitness-app",
     "slug": "fitness-app",
     "version": "1.0.0",
-
     "scheme": "fitnessapp",
     "web": {
       "bundler": "metro",
@@ -14,24 +13,24 @@
       }
     },
     "newArchEnabled": true,
-    "plugins": ["expo-router"],
+    "plugins": [
+      "expo-router"
+    ],
     "experiments": {
       "typedRoutes": true,
-
       "tsconfigPaths": true
     },
-
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-
     "userInterfaceStyle": "light",
-
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.fitnessapp"
@@ -50,6 +49,14 @@
             "deviceType": "iPhone 15 Pro"
           }
         }
+      }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "a020d529-10ab-4969-8976-8df51ce15cac"
       }
     }
   }
